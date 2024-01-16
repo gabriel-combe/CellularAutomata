@@ -3,6 +3,8 @@
 Cellular automata (2D and 1D) that uses neighbour configuration instead of neighbour count.
 The cellular automata can work beyond the first layer of neighbour (no limit implemented but can become really heavy in term of memory).
 
+https://github.com/gabriel-combe/CellularAutomata/assets/26323828/8e0c7df3-74b8-4b34-8128-bc5fc8512307
+
 ## Usage example
 
 Run the Application.java to start create a new grid, and type the rule string in the console (ex: B3/S2,3, or B3,9/S2,3,4,9) to start the cellular automata (default is 2D 25 neighbours with neighbour count rules).
