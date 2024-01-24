@@ -15,15 +15,15 @@ public class CA1D extends CellularAutomata{
     // Initialize the first line of the grid with a proba of 0.5 of being black or white
     @Override
     public void init(){
-        for(int i = 0; i < width; i++)
-            cells[i][0] = Math.random() < 0.5;
+        for(int x = 0; x < width; x++)
+            cells[0][x] = Math.random() < 0.5;
     }
     
     // Initialize the first line of the grid using the given proba
     @Override
     public void init(double density){
-        for(int i = 0; i < width; i++)
-            cells[i][0] = Math.random() < density;
+        for(int x = 0; x < width; x++)
+            cells[0][x] = Math.random() < density;
     }
 
     // Apply the set of rules on the current line to get the next line
@@ -35,11 +35,11 @@ public class CA1D extends CellularAutomata{
         }
 
         int currentPattern = this.startingNeighbourPattern();
-        this.cells[0][this.currentLine+1] = this.rules.nextState(currentPattern);
+        this.cells[this.currentLine+1][0] = this.rules.nextState(currentPattern);
         
-        for(int i = 1; i < this.width; i++){
-            currentPattern = this.neighbourPattern(currentPattern, i);
-            this.cells[i][this.currentLine+1] = this.rules.nextState(currentPattern);
+        for(int x = 1; x < this.width; x++){
+            currentPattern = this.neighbourPattern(currentPattern, x);
+            this.cells[this.currentLine+1][x] = this.rules.nextState(currentPattern);
         }
         
         this.currentLine++;
@@ -61,7 +61,7 @@ public class CA1D extends CellularAutomata{
                 column -= this.width;
             
             // encode the neighbour state
-            if(this.cells[column][this.currentLine])
+            if(this.cells[this.currentLine][column])
                 pattern = pattern | 1;
             
             // left shift to let space for the next neighbour
@@ -85,7 +85,7 @@ public class CA1D extends CellularAutomata{
             newBitIndex -= this.width;
         
         // encode the neighbour state
-        if(this.cells[newBitIndex][this.currentLine])
+        if(this.cells[this.currentLine][newBitIndex])
             pattern = pattern | 1;
 
         return pattern;

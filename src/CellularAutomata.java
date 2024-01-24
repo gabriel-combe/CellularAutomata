@@ -37,21 +37,40 @@ public abstract class CellularAutomata {
         this.isr = new InputStreamReader(System.in);
         this.br = new BufferedReader(this.isr);
 
-        this.cells = new boolean[width][height];
+        this.cells = new boolean[this.width][this.height];
         
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        this.setupPanel();
+    }
+
+    private void setupPanel(){
+        image = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
         raster = image.getRaster();
         colourModel = image.getColorModel();
 
-        scaledImage = new BufferedImage((scale * width), (scale * height), BufferedImage.TYPE_INT_RGB);
+        scaledImage = new BufferedImage((this.scale * this.width), (this.scale * this.height), BufferedImage.TYPE_INT_RGB);
         
+        if(imageFrame != null) imageFrame.dispose();
         imageFrame = new JFrame(this.windowName);
-        
-        imagePanel = new ImagePanel(scaledImage);        
+
+        imagePanel = new ImagePanel(scaledImage);
+
         imageFrame.add(imagePanel);
-        imageFrame.setSize(((scale * width) + 16), ((scale * height) + 36));
+        imageFrame.setSize(((this.scale * this.width) + 16), ((this.scale * this.height) + 36));
         imageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         imageFrame.setVisible(true);
+    }
+
+    // Set the grid
+    public void setGrid(boolean[][] newgrid){
+        this.width = newgrid.length;
+        this.height = newgrid[0].length;
+        
+        this.setupPanel();
+
+        this.cells = new boolean[this.width][this.height];
+        
+        copyGrid(newgrid, this.cells);
+        updateGridImage();
     }
     
     // Update the display of the grid
@@ -76,7 +95,7 @@ public abstract class CellularAutomata {
     }
     
     // Set the color of a cell
-    public void setCellColour(int x, int y, float red, float green, float blue){
+    private void setCellColour(int x, int y, float red, float green, float blue){
         Color colour  = new Color(red, green, blue);
         
         raster.setDataElements(x, y, colourModel.getDataElements(colour.getRGB(), null));
