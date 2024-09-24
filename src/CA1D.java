@@ -16,14 +16,14 @@ public class CA1D extends CellularAutomata{
     @Override
     public void init(){
         for(int x = 0; x < width; x++)
-            cells[0][x] = Math.random() < 0.5;
+            cells[x][0] = Math.random() < 0.5;
     }
     
     // Initialize the first line of the grid using the given proba
     @Override
     public void init(double density){
         for(int x = 0; x < width; x++)
-            cells[0][x] = Math.random() < density;
+            cells[x][0] = Math.random() < density;
     }
 
     // Apply the set of rules on the current line to get the next line
@@ -35,11 +35,11 @@ public class CA1D extends CellularAutomata{
         }
 
         int currentPattern = this.startingNeighbourPattern();
-        this.cells[this.currentLine+1][0] = this.rules.nextState(currentPattern);
+        this.cells[0][this.currentLine+1] = this.rules.nextState(currentPattern);
         
         for(int x = 1; x < this.width; x++){
             currentPattern = this.neighbourPattern(currentPattern, x);
-            this.cells[this.currentLine+1][x] = this.rules.nextState(currentPattern);
+            this.cells[x][this.currentLine+1] = this.rules.nextState(currentPattern);
         }
         
         this.currentLine++;
@@ -61,7 +61,7 @@ public class CA1D extends CellularAutomata{
                 column -= this.width;
             
             // encode the neighbour state
-            if(this.cells[this.currentLine][column])
+            if(this.cells[column][this.currentLine])
                 pattern = pattern | 1;
             
             // left shift to let space for the next neighbour
@@ -85,7 +85,7 @@ public class CA1D extends CellularAutomata{
             newBitIndex -= this.width;
         
         // encode the neighbour state
-        if(this.cells[this.currentLine][newBitIndex])
+        if(this.cells[newBitIndex][this.currentLine])
             pattern = pattern | 1;
 
         return pattern;

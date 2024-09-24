@@ -6,12 +6,12 @@ public class Application
     
     public static void main(String[] args) throws IOException
     {
-        // CA1D cellularAutomata = new CA1D(1200, 720, 1, 3);
-        CA2D cellularAutomata = new CA2D(500, 500, 2, 9);
+        CA1D cellularAutomata = new CA1D(1200, 720, 1, 3);
+        // CA2D cellularAutomata = new CA2D(500, 500, 2, 9);
 
         // Load a map in RLE format
         // LoadMap.load("10enginecordership.rle");
-        LoadMap.load("maps/gardensofeden2009.rle");
+        // LoadMap.load("maps/gardensofeden2009.rle");
 
         /*
          * TODO:
@@ -20,14 +20,14 @@ public class Application
         
         // Grid initialisation
         // cellularAutomata.init();
-        // cellularAutomata.init(0.1);
+        cellularAutomata.init(0.1);
         // cellularAutomata.rectangleCenter(3, 5);
-        cellularAutomata.setGrid(LoadMap.getGrid());
+        // cellularAutomata.setGrid(LoadMap.getGrid());
         
         cellularAutomata.displayGridImage();
 
         // Neighbour count rules
-        cellularAutomata.askRuleString();
+        // cellularAutomata.askRuleString();
 
         // Display the rules
         // cellularAutomata.printRules();
