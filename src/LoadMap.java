@@ -30,8 +30,8 @@ public class LoadMap {
                 grid = new boolean[2*size[0]][2*size[1]];
 
                 // Set initial start
-                currentGridRow = size[1]/2;
-                currentGridColumn = size[0]/2;
+                currentGridRow = size[1];
+                currentGridColumn = size[0];
                 
                 continue;
             }
@@ -57,7 +57,7 @@ public class LoadMap {
 
                 case '$':
                     currentGridRow += processBlank(fillNumber);
-                    currentGridColumn = size[0]/2;
+                    currentGridColumn = size[0];
                     fillNumber = "";
                     break;
 

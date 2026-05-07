@@ -24,8 +24,8 @@ public class CA2D extends CellularAutomata{
     public void init() {
         for(int i = 0; i < this.width; i++)
             for(int j = 0; j < this.height; j++)
-                cells[i][j] = Math.random() < 0.5;
-        
+                cells[i][j] = random.nextDouble() < 0.5;
+
         updateGridImage();
     }
 
@@ -34,8 +34,8 @@ public class CA2D extends CellularAutomata{
     public void init(double density) {
         for(int i = 0; i < this.width; i++)
             for(int j = 0; j < this.height; j++)
-                cells[i][j] = Math.random() < density;
-        
+                cells[i][j] = random.nextDouble() < density;
+
         updateGridImage();
     }
 

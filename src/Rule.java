@@ -13,7 +13,8 @@ public class Rule {
 
     public Rule(int knn){
         this.knn = knn;
-        this.ruleSize = (int) Math.pow(2, this.knn - 5);
+        long rawSize = (long) Math.pow(2, Math.max(0, this.knn - 5));
+        this.ruleSize = (int) Math.min(rawSize, 1048576L);
         this.ruleSize = this.ruleSize == 0 ? 1 : this.ruleSize;
         
         this.rules = new int[this.ruleSize];
@@ -33,9 +34,10 @@ public class Rule {
 
     // Display the set of rules (Integer format)
     public void printRules(){
+        System.out.println("---- Rule ----");
         for(int rule : this.rules)
             System.out.print(rule + " ");
-        System.out.println();
+        System.out.println("\n--------------");
     }
 
     // Set the rules of the cellular automata
@@ -46,7 +48,7 @@ public class Rule {
 
     // Retrieve the new state corresponding to the pattern
     protected boolean nextState(int pattern){
-        int subRuleIndex = pattern >>> 5;
+        int subRuleIndex = (pattern >>> 5) % this.rules.length;
         int stateIndex = pattern & 31;
         boolean newState = ((this.rules[subRuleIndex] >>> stateIndex) & 1) == 1;
         return newState;

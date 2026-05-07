@@ -1,11 +1,17 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
+import java.util.Random;
 import javax.imageio.*;
 import javax.swing.*;
 
 public abstract class CellularAutomata {
+    private static final long SEED = 42L;
+
     protected int width, height, scale, knn;
+    protected Random random;
+    protected String ruleString = "unknown";
+    private int generation = 0;
 
     protected Rule rules;
     
@@ -33,6 +39,7 @@ public abstract class CellularAutomata {
         this.knn = knn;
 
         this.rules = new Rule(this.knn);
+        this.random = new Random(SEED);
 
         this.isr = new InputStreamReader(System.in);
         this.br = new BufferedReader(this.isr);
@@ -112,11 +119,20 @@ public abstract class CellularAutomata {
         System.out.print("Input your rule string (format Bb0,b1,.../Ss0,s1,...): ");
 
         try{
-            this.rules.genRules(br.readLine());
+            String input = br.readLine();
+            this.ruleString = input.replaceAll("[/\\\\:*?\"<>|]", "_");
+            this.rules.genRules(input);
         }catch(Exception e){
             System.out.println(e);
             askRuleString();
         }
+    }
+
+    public void saveGridImage() throws IOException {
+        File dir = new File("results/" + ruleString);
+        dir.mkdirs();
+        ImageIO.write(scaledImage, "PNG", new File(dir, "generation_" + generation + ".png"));
+        generation++;
     }
     
     abstract public void init();

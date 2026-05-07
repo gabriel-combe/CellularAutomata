@@ -16,14 +16,14 @@ public class CA1D extends CellularAutomata{
     @Override
     public void init(){
         for(int x = 0; x < width; x++)
-            cells[x][0] = Math.random() < 0.5;
+            cells[x][0] = random.nextDouble() < 0.5;
     }
-    
+
     // Initialize the first line of the grid using the given proba
     @Override
     public void init(double density){
         for(int x = 0; x < width; x++)
-            cells[x][0] = Math.random() < density;
+            cells[x][0] = random.nextDouble() < density;
     }
 
     // Apply the set of rules on the current line to get the next line
